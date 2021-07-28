@@ -1,0 +1,32 @@
+version: "3.5"
+
+services:
+  front:
+    build: "../../part1/1.14 Environment/front/"
+    container_name: front-end
+    ports:
+      - "5000:5000"
+  back:
+    build: "../../part1/1.14 Environment/back/"
+    container_name: back-end
+    environment:
+      - POSTGRES_DATABASE=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=back-end-db
+      - REDIS_HOST=back-end-redis
+    ports:
+      - "8080:8080"
+  redis:
+    image: redis
+    container_name: back-end-redis
+    ports:
+      - "6379:6379"
+  postgres:
+    image: postgres
+    restart: unless-stopped
+    container_name: back-end-db
+    environment:
+      - POSTGRES_DATABASE=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
