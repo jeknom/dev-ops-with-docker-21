@@ -1,0 +1,25 @@
+# Note that for some reason training gets stuck on "gathering mopeds..." for more than 20 minutes.
+# Due to this, I wasn't able to verify if this works properly.
+
+version: "3.5"
+
+volumes:
+  imgs:
+  model:
+
+services:
+  training:
+    build: "./ml-kurkkumopo-training"
+    volumes:
+      - "model:/src/model"
+      - "imgs:/src/imgs"
+  front:
+    build: "./ml-kurkkumopo-frontend"
+    ports:
+      - "3000:3000"
+  back:
+    build: "./ml-kurkkumopo-backend"
+    ports:
+      - "5000:5000"
+    volumes:
+      - "model:/src/model"
