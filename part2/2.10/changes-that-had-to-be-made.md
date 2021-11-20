@@ -1,0 +1,1 @@
+I needed to make slight changes to the front and back Dockerfiles. On the front this meant changing the `REACT_APP_BACKEND_URL` env variable to `http://localhost/api`. On the back `REQUEST_ORIGIN` to `http://localhost`.
