@@ -1,0 +1,1 @@
+docker run -it -v /var/run/docker.sock:/var/run/docker.sock -e GIT_REPO=<your-git-repo> -e DOCKER_REPO=<your-docker-repo>:<tag> -e DOCKER_USER=<your-username> -e DOCKER_PASS=<your-password> cloneandpush
