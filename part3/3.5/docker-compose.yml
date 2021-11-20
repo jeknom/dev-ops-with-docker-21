@@ -1,0 +1,45 @@
+version: "3.5"
+
+services:
+  front:
+    build: "./front/"
+    container_name: front-end
+    ports:
+      - "5000:5000"
+  back:
+    build: "./back/"
+    container_name: back-end
+    environment:
+      - POSTGRES_DATABASE=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=back-end-db
+      - REDIS_HOST=back-end-redis
+    ports:
+      - "8080:8080"
+  redis:
+    image: redis
+    container_name: back-end-redis
+    command: --save 60 1
+    volumes:
+      - ./redis:/data
+    ports:
+      - "6379:6379"
+  postgres:
+    image: postgres
+    restart: unless-stopped
+    container_name: back-end-db
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DATABASE=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  nginx:
+    image: nginx
+    restart: unless-stopped
+    container_name: nginx-container
+    ports:
+      - "80:80"
+    volumes:
+      - "./nginx.conf:/etc/nginx/nginx.conf"
